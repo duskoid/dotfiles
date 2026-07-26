@@ -66,6 +66,7 @@ in {
   ];
 
   home.sessionVariables = {
+    LIBVIRT_DEFAULT_URI = "qemu:///system";
     EDITOR = "nvim";
     VISUAL = "nvim";
     SUDO_EDITOR = "nvim";
@@ -82,6 +83,7 @@ in {
       + "--color=info:#545c7e --color=marker:#ff007c --color=pointer:#ff007c "
       + "--color=prompt:#2ac3de --color=query:#c0caf5:regular "
       + "--color=scrollbar:#27a1b9 --color=separator:#ff9e64 --color=spinner:#ff007c";
+    SEARXNG_URL = "http://100.64.0.0:8888";
   };
 
   # nix store is immutable; give npm a writable global prefix + PATH

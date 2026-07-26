@@ -1,23 +1,21 @@
 {
-  "lastChangelogVersion": "0.81.1",
+  "lastChangelogVersion": "0.82.1",
   "theme": "dark",
+  "extensions": [
+    "~/.pi/agent/extensions/herdr-spawn.ts"
+  ],
   "packages": [
     "npm:pi-alibaba-models",
-    "npm:pi-open-agents",
-    "npm:@ff-labs/pi-fff",
-    "npm:@samfp/pi-essentials",
     "npm:pi-provider-kiro-dev",
-    "npm:pi-mcp-adapter",
+    "npm:pi-commandcode-provider",
+    "npm:pi-advisor-flow",
+    "npm:@ogulcancelik/pi-herdr",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:@juicesharp/rpiv-todo",
-    "npm:pi-web-access",
-    "npm:@plannotator/pi-extension",
-    "npm:pi-agent-pi-markitdown",
-    "npm:pi-commandcode-provider",
-    "npm:@dietrichgebert/ponytail"
+    "npm:@juicesharp/rpiv-web-tools"
   ],
-  "defaultProvider": "alibaba-plan",
-  "defaultModel": "qwen3.8-max-preview",
+  "defaultProvider": "opencode",
+  "defaultModel": "big-pickle",
   "defaultThinkingLevel": "high",
   "terminal": {
     "showTerminalProgress": true

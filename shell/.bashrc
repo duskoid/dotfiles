@@ -20,3 +20,5 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export SDL_IM_MODULE=fcitx
+export LIBVIRT_DEFAULT_URI=qemu:///system
+export SEARXNG_URL="http://100.64.0.0:8888"

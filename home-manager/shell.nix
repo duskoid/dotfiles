@@ -181,6 +181,12 @@
         # API keys live in a private, non-committed file (never in the nix store)
         [[ -f ~/.zsh/secrets.zsh ]] && source ~/.zsh/secrets.zsh
 
+        # ssh-agent: auto-start and add key if not already loaded
+        if [ -z "$SSH_AUTH_SOCK" ]; then
+            eval "$(ssh-agent -s)" > /dev/null
+            ssh-add ~/.ssh/id_ed25519 2>/dev/null
+        fi
+
         [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
       '')
     ];
