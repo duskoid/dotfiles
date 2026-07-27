@@ -12,10 +12,13 @@
     "npm:@ogulcancelik/pi-herdr",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:@juicesharp/rpiv-todo",
-    "npm:@juicesharp/rpiv-web-tools"
+    "npm:@juicesharp/rpiv-web-tools",
+    "npm:pi-mcp-adapter",
+    "npm:@mrclrchtr/supi-web",
+    "npm:pi-undo-redo"
   ],
-  "defaultProvider": "opencode",
-  "defaultModel": "big-pickle",
+  "defaultProvider": "alibaba-plan",
+  "defaultModel": "qwen3.7-plus",
   "defaultThinkingLevel": "high",
   "terminal": {
     "showTerminalProgress": true
@@ -40,6 +43,8 @@
     "commandcode/meta/muse-spark-1.1",
     "commandcode/MiniMaxAI/MiniMax-M3",
     "commandcode/moonshotai/Kimi-K2.7-Code",
-    "opencode/laguna-s-2.1-free"
+    "opencode/laguna-s-2.1-free",
+    "openrouter/openrouter/free",
+    "opencode/mimo-v2.5-free"
   ]
 }
