@@ -1,12 +1,11 @@
 {
-  "lastChangelogVersion": "0.82.1",
+  "lastChangelogVersion": "0.83.0",
   "theme": "dark",
   "extensions": [
     "~/.pi/agent/extensions/herdr-spawn.ts"
   ],
   "packages": [
     "npm:pi-alibaba-models",
-    "npm:pi-provider-kiro-dev",
     "npm:pi-commandcode-provider",
     "npm:pi-advisor-flow",
     "npm:@ogulcancelik/pi-herdr",
@@ -15,11 +14,13 @@
     "npm:@juicesharp/rpiv-web-tools",
     "npm:pi-mcp-adapter",
     "npm:@mrclrchtr/supi-web",
-    "npm:pi-undo-redo"
+    "npm:pi-undo-redo",
+    "npm:@duskoide/pi-herdr-worker",
+    "npm:@arvoretech/pi-kiro-provider"
   ],
-  "defaultProvider": "alibaba-plan",
-  "defaultModel": "qwen3.7-plus",
-  "defaultThinkingLevel": "high",
+  "defaultProvider": "kiro",
+  "defaultModel": "gpt-5-6-luna",
+  "defaultThinkingLevel": "max",
   "terminal": {
     "showTerminalProgress": true
   },
@@ -28,23 +29,10 @@
   "enabledModels": [
     "opencode/big-pickle",
     "opencode/deepseek-v4-flash-free",
-    "opencode-go/kimi-k3",
-    "opencode-go/minimax-m3",
+    "opencode/mimo-v2.5-free",
     "alibaba-plan/qwen3.8-max-preview",
     "alibaba-plan/qwen3.7-plus",
-    "alibaba-plan/qwen3.6-flash",
-    "alibaba-plan/glm-5.2",
-    "kiro/claude-sonnet-5",
-    "kiro/claude-opus-4-8",
-    "kiro/gpt-5-6-terra",
     "kiro/gpt-5-6-luna",
-    "commandcode/moonshotai/Kimi-K3",
-    "commandcode/zai-org/GLM-5.2",
-    "commandcode/meta/muse-spark-1.1",
-    "commandcode/MiniMaxAI/MiniMax-M3",
-    "commandcode/moonshotai/Kimi-K2.7-Code",
-    "opencode/laguna-s-2.1-free",
-    "openrouter/openrouter/free",
-    "opencode/mimo-v2.5-free"
+    "kiro/claude-opus-5"
   ]
 }
