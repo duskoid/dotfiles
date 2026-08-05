@@ -33,6 +33,9 @@
     "alibaba-plan/qwen3.8-max-preview",
     "alibaba-plan/qwen3.7-plus",
     "kiro/gpt-5-6-luna",
-    "kiro/claude-opus-5"
+    "kiro/claude-opus-5",
+    "deepseek/deepseek-v4-flash",
+    "kiro/gpt-5-6-terra",
+    "kiro/gpt-5-6-sol"
   ]
 }

@@ -41,7 +41,7 @@ Secrets (`~/.zsh/secrets.zsh`) and p10k config (`~/.zsh/.p10k.zsh`) are symlinke
 These point back into `~/dotfiles` via `mkOutOfStoreSymlink` — edit there, no rebuild needed:
 
 - `~/.config/nvim` → LazyVim
-- `~/.config/helix`, `yazi`, `btop`, `fastfetch`, `lazygit`, `kitty`, `opencode`
+- `~/.config/helix`, `yazi`, `btop`, `fastfetch`, `lazygit`, `kitty`, `opencode`, `niri`, `rofi`
 - `~/.zsh/.p10k.zsh`, `functions.zsh`, `secrets.zsh`
 - `~/.pi/web-search.json`, `~/.pi/agent/settings.json`, `APPEND_SYSTEM.md`, `alibaba-config.json`, `agents/*.md` (pi coding agent; `~/.pi/agent` stays a real dir for runtime state, `auth.json` gitignored)
 - `~/.config/herdr/config.toml` (herdr; `~/.config/herdr` stays a real dir for plugins/session/logs, all gitignored)
@@ -91,7 +91,7 @@ Previous generations are retained automatically.
 
 ## What's Left Outside
 
-- **Desktop/GUI**: niri, hyprland, waybar, rofi, sddm, pipewire, etc. stay on the host distro (dnf/flatpak). Config files for these are still symlinked manually from dotfiles.
+- **Desktop/GUI**: niri, hyprland, waybar, rofi, sddm, pipewire, etc. stay on the host distro (dnf/flatpak). Niri and Rofi configuration directories are managed by Home Manager; other desktop configs are still symlinked manually from dotfiles.
 - **`~/.pi`**: Live runtime state (not symlinked — the repo copy is only a partial backup).
 - **Bash files**: `~/.bashrc` and `~/.bash_profile` remain manual symlinks (zsh is the primary shell).
 
