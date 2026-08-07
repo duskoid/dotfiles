@@ -37,6 +37,9 @@ key = "prefix+t"
 type = "plugin_action"
 command = "persiyanov.reviewr.toggle"   # <plugin_id>.<action_id> — note the id, not the name
 
+[terminal]
+shell_mode="login"
+
 [theme]
 name = "nord"
 auto_switch = false

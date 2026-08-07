@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.83.0",
+  "lastChangelogVersion": "0.84.1",
   "theme": "dark",
   "extensions": [
     "~/.pi/agent/extensions/herdr-spawn.ts"
@@ -7,20 +7,20 @@
   "packages": [
     "npm:pi-alibaba-models",
     "npm:pi-commandcode-provider",
-    "npm:pi-advisor-flow",
     "npm:@ogulcancelik/pi-herdr",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:@juicesharp/rpiv-todo",
     "npm:@juicesharp/rpiv-web-tools",
-    "npm:pi-mcp-adapter",
     "npm:@mrclrchtr/supi-web",
     "npm:pi-undo-redo",
     "npm:@duskoide/pi-herdr-worker",
-    "npm:@arvoretech/pi-kiro-provider"
+    "npm:@arvoretech/pi-kiro-provider",
+    "npm:@dietrichgebert/ponytail",
+    "npm:@vigolium/piolium"
   ],
-  "defaultProvider": "kiro",
-  "defaultModel": "gpt-5-6-luna",
-  "defaultThinkingLevel": "max",
+  "defaultProvider": "alibaba-plan",
+  "defaultModel": "qwen3.8-max",
+  "defaultThinkingLevel": "high",
   "terminal": {
     "showTerminalProgress": true
   },
@@ -30,12 +30,13 @@
     "opencode/big-pickle",
     "opencode/deepseek-v4-flash-free",
     "opencode/mimo-v2.5-free",
-    "alibaba-plan/qwen3.8-max-preview",
     "alibaba-plan/qwen3.7-plus",
     "kiro/gpt-5-6-luna",
     "kiro/claude-opus-5",
     "deepseek/deepseek-v4-flash",
     "kiro/gpt-5-6-terra",
-    "kiro/gpt-5-6-sol"
-  ]
+    "kiro/gpt-5-6-sol",
+    "alibaba-plan/qwen3.8-max"
+  ],
+  "tuiMode": "fullscreen"
 }
