@@ -5,7 +5,6 @@
     "~/.pi/agent/extensions/herdr-spawn.ts"
   ],
   "packages": [
-    "npm:pi-alibaba-models",
     "npm:pi-commandcode-provider",
     "npm:@ogulcancelik/pi-herdr",
     "npm:@juicesharp/rpiv-ask-user-question",
@@ -15,12 +14,16 @@
     "npm:pi-undo-redo",
     "npm:@duskoide/pi-herdr-worker",
     "npm:@arvoretech/pi-kiro-provider",
-    "npm:@dietrichgebert/ponytail",
-    "npm:@vigolium/piolium"
+    "npm:@vigolium/piolium",
+    "npm:pi-alibaba-models",
+    "npm:@upstash/context7-pi",
+    "npm:pi-simplify",
+    "npm:@gotgenes/pi-permission-system",
+    "npm:@narumitw/pi-plan-mode"
   ],
-  "defaultProvider": "alibaba-plan",
-  "defaultModel": "qwen3.8-max",
-  "defaultThinkingLevel": "high",
+  "defaultProvider": "kiro",
+  "defaultModel": "gpt-5-6-luna",
+  "defaultThinkingLevel": "max",
   "terminal": {
     "showTerminalProgress": true
   },
@@ -30,10 +33,9 @@
     "opencode/big-pickle",
     "opencode/deepseek-v4-flash-free",
     "opencode/mimo-v2.5-free",
-    "alibaba-plan/qwen3.7-plus",
     "kiro/gpt-5-6-luna",
     "kiro/claude-opus-5",
-    "deepseek/deepseek-v4-flash",
+    "openrouter/deepseek/deepseek-v4-flash-0731",
     "kiro/gpt-5-6-terra",
     "kiro/gpt-5-6-sol",
     "alibaba-plan/qwen3.8-max"

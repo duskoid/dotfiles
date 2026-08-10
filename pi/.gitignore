@@ -25,3 +25,7 @@ agent/agents/.test-probe*
 **/.venv/
 .ready
 .gcc_lib_path
+
+# extension/package node deps (regenerated via `npm install`; only
+# package.json + package-lock.json are tracked)
+**/node_modules/
