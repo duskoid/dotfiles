@@ -1,4 +1,4 @@
-{ config, pkgs, lib, herdr, superfile, ... }:
+{ config, pkgs, lib, superfile, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/dotfiles";
@@ -53,7 +53,6 @@ in {
     github-cli
     zellij
     rofi
-    herdr.packages.${pkgs.system}.default
     superfile.packages.${pkgs.system}.default
 
     # GUI apps

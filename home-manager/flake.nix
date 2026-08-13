@@ -7,17 +7,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    herdr = {
-      url = "github:ogulcancelik/herdr";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     superfile = {
       url = "github:yorukot/superfile";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, herdr, superfile, ... }:
+  outputs = { nixpkgs, home-manager, superfile, ... }:
     let
       system = "x86_64-linux";
       username = "pn";
@@ -29,7 +25,7 @@
       homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {
-          inherit herdr superfile;
+          inherit superfile;
           isNixOS = false;
         };
         modules = [
@@ -41,7 +37,7 @@
       # NixOS machine with home-manager wired in as a module.
       # Reuses the same home.nix/shell.nix, with isNixOS = true.
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit herdr superfile; };
+        specialArgs = { inherit superfile; };
         modules = [
           ./nixos/configuration.nix
           home-manager.nixosModules.home-manager
@@ -50,7 +46,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = {
-                inherit herdr superfile;
+                inherit superfile;
                 isNixOS = true;
               };
               users.${username} = {
