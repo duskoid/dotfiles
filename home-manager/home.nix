@@ -74,6 +74,8 @@ in {
     # nix zsh needs to find xterm-kitty terminfo (kitty.terminfo pkg)
     TERMINFO_DIRS = "${config.home.homeDirectory}/.nix-profile/share/terminfo:/usr/share/terminfo";
     BROWSER = "flatpak run app.zen_browser.zen";
+    # plannotator pi extension: BROWSER above is multi-word (flatpak run ...) and breaks spawn()
+    PLANNOTATOR_BROWSER = "xdg-open";
     NPM_CONFIG_PREFIX = "${config.home.homeDirectory}/.npm-global";
     PAGER = "bat";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
@@ -128,9 +130,7 @@ in {
     # Manage the complete Niri configuration directory from the repository.
     niri.source = link "${dotfiles}/niri/.config/niri";
     rofi.source = link "${dotfiles}/rofi/.config/rofi";
-    # herdr: link only config.toml; ~/.config/herdr stays a real dir for
-    # runtime state (plugins/, plugins.json, session.json, logs).
-    "herdr/config.toml".source = link "${dotfiles}/herdr/.config/herdr/config.toml";
+    # herdr's config.toml is managed by ~/pi-config (install.sh links it).
   };
 
   # Default web browser = Zen (flatpak). Covers every scheme/MIME type apps
