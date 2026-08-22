@@ -41,7 +41,7 @@ Secrets (`~/.zsh/secrets.zsh`) and p10k config (`~/.zsh/.p10k.zsh`) are symlinke
 These point back into `~/dotfiles` via `mkOutOfStoreSymlink` — edit there, no rebuild needed:
 
 - `~/.config/nvim` → LazyVim
-- `~/.config/helix`, `yazi`, `btop`, `fastfetch`, `lazygit`, `kitty`, `opencode`, `niri`, `rofi`
+- `~/.config/helix`, `yazi`, `fastfetch`, `lazygit`, `kitty`, `opencode`, `niri`, `rofi`
 - `~/.zsh/.p10k.zsh`, `functions.zsh`, `secrets.zsh`
 - `~/.pi/web-search.json`, `~/.pi/agent/settings.json`, `APPEND_SYSTEM.md`, `alibaba-config.json`, `agents/*.md` (pi coding agent; `~/.pi/agent` stays a real dir for runtime state, `auth.json` gitignored)
 - `~/.config/herdr/config.toml` (herdr; `~/.config/herdr` stays a real dir for plugins/session/logs, all gitignored)

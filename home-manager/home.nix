@@ -109,7 +109,6 @@ in {
     nvim.source = link "${dotfiles}/nvim/.config/nvim";
     helix.source = link "${dotfiles}/helix/.config/helix";
     yazi.source = link "${dotfiles}/yazi/.config/yazi";
-    btop.source = link "${dotfiles}/btop/.config/btop";
     fastfetch.source = link "${dotfiles}/fastfetch/.config/fastfetch";
     lazygit.source = link "${dotfiles}/lazygit/.config/lazygit";
     kitty.source = link "${dotfiles}/kitty/.config/kitty";

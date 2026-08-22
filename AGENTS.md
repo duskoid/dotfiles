@@ -12,7 +12,6 @@ tool/.config/tool/<config files>
 
 These are the configuration directories currently present in the repository:
 
-- `btop/` — btop configuration at `btop/.config/btop/btop.conf`.
 - `fresh/` — Fresh editor configuration at `fresh/.config/fresh/config.json` and `fresh/.config/fresh/init.ts`.
 - `home-manager/` — Nix flake and modules: `flake.nix`, `home.nix`, `shell.nix`, `nixos/configuration.nix`, and `nixos/hardware-configuration.nix`; see [Flake Architecture](#flake-architecture).
 - `kitty/` — Kitty terminal configuration at `kitty/.config/kitty/kitty.conf`, including color and theme files.
@@ -46,7 +45,6 @@ Packages, session variables, programs, and links are declared in `home-manager/h
 
 Home Manager currently links these existing repository paths:
 
-- `~/.config/btop` → `btop/.config/btop`
 - `~/.config/fresh/config.json` → `fresh/.config/fresh/config.json`
 - `~/.config/fresh/init.ts` → `fresh/.config/fresh/init.ts`
 - `~/.config/kitty` → `kitty/.config/kitty`
