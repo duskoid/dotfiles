@@ -1,0 +1,62 @@
+{
+  "theme": "builtin://nord",
+  "locale": "en",
+  "editor": {
+    "use_terminal_bg": true,
+    "cursor_style": "steady_block",
+    "animations": false,
+    "cursor_jump_animation": false,
+    "line_numbers": true,
+    "relative_line_numbers": true,
+    "highlight_current_line": true,
+    "highlight_current_column": false,
+    "highlight_occurrences": true,
+    "line_wrap": true,
+    "wrap_indent": true,
+    "show_menu_bar": true,
+    "show_tab_bar": true,
+    "show_status_bar": true,
+    "show_vertical_scrollbar": true,
+    "nerd_font_icons": true,
+    "rainbow_indentation": true,
+    "rainbow_brackets": true,
+    "use_tabs": false,
+    "tab_size": 2,
+    "restore_previous_session": true,
+    "status_bar": {
+      "left": [
+        "{remote}",
+        "{trust}",
+        "{cursor}",
+        "{diagnostics}",
+        "{cursor_count}",
+        "{messages}",
+        "{git_statusbar:branch}",
+        "{filename}"
+      ]
+    }
+  },
+  "file_browser": {
+    "show_hidden": true
+  },
+  "keybindings": [
+    {
+      "keys": [
+        { "key": "Space", "modifiers": [] },
+        { "key": "e", "modifiers": [] }
+      ],
+      "action": "toggle_file_explorer",
+      "when": "mode:vi-normal"
+    }
+  ],
+  "plugins": {
+    "vi_mode": {
+      "enabled": true,
+      "settings": {
+        "autoStart": true,
+        "arrowKeys": true,
+        "searchWordUnderCursor": true
+      }
+    }
+  }
+}

@@ -105,3 +105,8 @@ ss() {
 
     fi
 }
+
+# Reboot once into the Windows UEFI boot entry.
+winboot() {
+    sudo efibootmgr --bootnext 0004 && sudo systemctl reboot
+}

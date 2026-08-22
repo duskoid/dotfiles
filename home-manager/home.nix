@@ -48,7 +48,7 @@ in {
     btop
     fastfetch
     lazygit
-    helix
+    fresh-editor
     neovim
     github-cli
     zellij
@@ -114,6 +114,8 @@ in {
     lazygit.source = link "${dotfiles}/lazygit/.config/lazygit";
     kitty.source = link "${dotfiles}/kitty/.config/kitty";
     opencode.source = link "${dotfiles}/opencode/.config/opencode";
+    "fresh/config.json".source = link "${dotfiles}/fresh/.config/fresh/config.json";
+    "fresh/init.ts".source = link "${dotfiles}/fresh/.config/fresh/init.ts";
     # Manage the complete Niri configuration directory from the repository.
     niri.source = link "${dotfiles}/niri/.config/niri";
     rofi.source = link "${dotfiles}/rofi/.config/rofi";
