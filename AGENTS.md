@@ -1,84 +1,140 @@
 # Dotfiles Repository
 
-Personal dotfiles for Linux (distro-agnostic via Nix + `targets.genericLinux`), with Niri/Hyprland compositors. The dev environment and shell are managed entirely by **Nix home-manager**; desktop/GUI configs are symlinked manually.
+Personal Linux dotfiles managed primarily by Nix Home Manager. The repository uses a consistent config layout:
 
-## Repository Structure
-
-Each tool gets a top-level directory mirroring `~/.config/`:
-
-```
-toolname/.config/toolname/<actual config files>
+```text
+tool/.config/tool/<config files>
 ```
 
-The centerpiece is `home-manager/`, which holds the flake that installs packages, configures the shell, and symlinks most app configs into place (see `HOME_MANAGER.md` for details).
+`home-manager/` is the source of truth for packages, environment variables, shell configuration, and the checked-in application configurations linked into `~/.config`. See `HOME_MANAGER.md` for the longer setup and rollback guide.
 
-Key directories:
-- `home-manager/` — **Nix flake**: `flake.nix`, `home.nix` (packages, env, symlinks, programs), `shell.nix` (zsh). This is the source of truth for the dev environment.
-- `shell/` — Shell config symlinked by home-manager: `.zsh/functions.zsh`, `.zsh/.p10k.zsh`, `.zsh/secrets.zsh` (gitignored). `.bashrc`/`.bash_profile` are manual.
-- `niri/` — Primary compositor (KDL, split into modular `dms/` includes)
-- `nvim/` — LazyVim-based Neovim (lazy.nvim, minimal customization)
-- `pi/` — pi coding agent (settings, subagent defs, system prompt; auth stays local)
-- `kitty/` — Terminal (Iosevka Nerd Font, Alabaster Dark theme)
-- `waybar/` — Status bar (split into `modules-main.jsonc`, `modules-custom.jsonc`, `modules-groups.jsonc`)
-- `rofi/` — App launcher (multiple themes in `themes/` and `menu/`)
-- `herdr/` — herdr terminal workspace manager (keybindings/theme/ui in config.toml; plugins reinstalled via CLI)
+## Repository Layout
+
+These are the configuration directories currently present in the repository:
+
+- `btop/` — btop configuration at `btop/.config/btop/btop.conf`.
+- `fresh/` — Fresh editor configuration at `fresh/.config/fresh/config.json` and `fresh/.config/fresh/init.ts`.
+- `home-manager/` — Nix flake and modules: `flake.nix`, `home.nix`, `shell.nix`, `nixos/configuration.nix`, and `nixos/hardware-configuration.nix`; see [Flake Architecture](#flake-architecture).
+- `kitty/` — Kitty terminal configuration at `kitty/.config/kitty/kitty.conf`, including color and theme files.
+- `niri/` — Niri compositor configuration at `niri/.config/niri/config.kdl`, modular `dms/*.kdl` includes, scripts, icons, sounds, and wallpapers.
+- `nvim/` — Neovim configuration at `nvim/.config/nvim/`, based on LazyVim.
+- `rofi/` — Rofi launcher configuration at `rofi/.config/rofi/`, including menus, themes, and assets.
+- `shell/` — Bash and Zsh files; see [Shell](#shell).
+
+Root-level files include `AGENTS.md`, `HOME_MANAGER.md`, `bootstrap.sh`, and `.gitignore`. The Neovim configuration also has its own `nvim/.gitignore`.
+
+Pi and Herdr configuration are not stored in this repository. They are managed externally (for example, from `~/pi-config`) and should not be added to the repository layout unless that management arrangement changes.
+
+## Flake Architecture
+
+The flake is defined in `home-manager/flake.nix` and has three inputs:
+
+- `nixpkgs` from `nixos-unstable`.
+- `home-manager` from `nix-community/home-manager`, following the flake's `nixpkgs`.
+- `superfile` from `yorukot/superfile`, also following the flake's `nixpkgs`.
+
+It provides two configurations:
+
+- `homeConfigurations.pn` — standalone Home Manager for generic Linux systems such as Fedora. It imports `home.nix` and `shell.nix` with `targets.genericLinux.enable = true` and `isNixOS = false`.
+- `nixosConfigurations.tower` — a complete NixOS system configuration. It imports `nixos/configuration.nix`, integrates `home-manager.nixosModules.home-manager`, and reuses `home.nix` and `shell.nix` with `isNixOS = true`.
+
+The NixOS modules include the system configuration and a placeholder `nixos/hardware-configuration.nix`; replace that placeholder with machine-generated hardware configuration before deploying to real hardware.
+
+## Home Manager and Config Links
+
+Packages, session variables, programs, and links are declared in `home-manager/home.nix`. The `xdg.configFile` entries use `config.lib.file.mkOutOfStoreSymlink`, so they point to the live checkout rather than an immutable Nix-store copy. Editing these files in the repository does not require a rebuild for the link target to contain the change.
+
+Home Manager currently links these existing repository paths:
+
+- `~/.config/btop` → `btop/.config/btop`
+- `~/.config/fresh/config.json` → `fresh/.config/fresh/config.json`
+- `~/.config/fresh/init.ts` → `fresh/.config/fresh/init.ts`
+- `~/.config/kitty` → `kitty/.config/kitty`
+- `~/.config/niri` → `niri/.config/niri`
+- `~/.config/nvim` → `nvim/.config/nvim`
+- `~/.config/rofi` → `rofi/.config/rofi`
+- `~/.zsh/.p10k.zsh` → `shell/.zsh/.p10k.zsh`
+- `~/.zsh/functions.zsh` → `shell/.zsh/functions.zsh`
+- `~/.zsh/secrets.zsh` → `shell/.zsh/secrets.zsh`
+
+The `.zsh` directory remains a real directory so Home Manager can place Zsh plugins and history there. `secrets.zsh` is intentionally private and ignored by Git; create it locally on a new machine.
 
 ## Package Management
 
-Packages are declared in `home.packages` in `home-manager/home.nix` and installed via `home-manager switch`. There are no package-list text files — the flake is the single source of truth. Rust toolchains are managed by `rustup` (also a nix package); global npm tools use a writable `~/.npm-global` prefix.
+Add or remove packages in `home-manager/home.nix`, then run the appropriate Home Manager or NixOS switch command. The declared package groups are:
+
+- **Development toolchains:** Node.js, OpenJDK 25, Python 3.11 with pip, Rustup, Bun, and UV.
+- **CLI utilities:** ripgrep, fd, fzf, jq, gum, eza, bat, delta, glow, stylua, shellcheck, shfmt, tty-clock, pnpm, Turso CLI, and `sqld`.
+- **Terminal applications:** btop, fastfetch, lazygit, `fresh-editor`, Neovim, GitHub CLI, Zellij, Rofi, and Superfile.
+- **GUI and fonts:** KDE Okular, Iosevka, Iosevka Nerd Font, and Noto CJK fonts.
+
+Rust toolchains are installed and selected through `rustup`; `~/.cargo/bin` is added to the session PATH. NPM globals use the writable `~/.npm-global` prefix, which is also added to PATH.
+
+Home Manager also configures Git, fzf, zoxide, direnv, and Home Manager itself. Direnv is integrated with Zsh.
+
+## XDG MIME Defaults
+
+`home-manager/home.nix` enables `xdg.mimeApps` and sets Zen Browser, installed as a Flatpak, as the default handler for HTTP/HTTPS, browser, HTML, XML, and related web MIME types. KDE Okular is the default PDF handler. The existing Claude CLI URL handler is preserved.
 
 ## Shell
 
-Zsh is configured declaratively by `programs.zsh` in `home-manager/shell.nix` (no Zinit). Plugins load in order: powerlevel10k → zsh-completions → zsh-vi-mode → (after compinit) fzf-tab, autosuggestions, syntax-highlighting. Aliases, options, history, and keybindings live in `shell.nix`.
+### Zsh
 
-- **Powerlevel10k** theme (nerdfont-v3, lean, transient) — config in `shell/.zsh/.p10k.zsh`
-- **Vi mode** enabled with custom cursor styles
-- Key aliases: `cd`→`z` (zoxide), `cat`→`bat`, `ls`→`eza`, `vi`/`vim`→`nvim`, `lg`→`lazygit`
-- Custom functions in `shell/.zsh/functions.zsh` (gpush, multi-distro `ss`, etc.)
-- Secrets (API keys) in `shell/.zsh/secrets.zsh` — gitignored, never in the nix store
+Zsh is configured declaratively by `programs.zsh` in `home-manager/shell.nix`. The configuration includes:
 
-## Desktop
+- Powerlevel10k, zsh-completions, and zsh-vi-mode plugins.
+- fzf-tab, zsh-autosuggestions, and zsh-syntax-highlighting loaded after compinit.
+- Vi-mode cursor styles and history navigation bindings.
+- Shell options, history settings, aliases, keybindings, and initialization hooks.
+- Powerlevel10k settings from `shell/.zsh/.p10k.zsh`.
+- Custom functions from `shell/.zsh/functions.zsh`.
+- Optional private API keys from `shell/.zsh/secrets.zsh`.
 
-- **Niri** (primary): modular KDL config, DMS integration for IPC (spotlight, clipboard, power menu, notifications, wallpaper)
-- **Hyprland** (secondary): visual config in `hypr/configs.conf`
-- **Waybar**: configured for Niri modules
+Common aliases include `cd` through zoxide, `cat` through bat, `ls` through eza, `vi`/`vim` through Neovim, and `lg` through lazygit. NixOS and generic-Linux configurations expose different system rebuild aliases through `isNixOS`.
 
-Desktop/GUI configs (niri, hypr, rofi, waybar) are **not** managed by home-manager — they're symlinked into place manually.
+### Bash
 
-## OpenCode Config
+The repository also contains the manually maintained Bash startup files:
 
-Located at `opencode/.config/opencode/`:
-- Context7 MCP for library docs
-- `superpowers` plugin
-- Custom commands: `/review` (code review), `/workflow` (autonomous multi-agent workflow)
+- `shell/.bashrc`
+- `shell/.bash_profile`
 
-## Neovim
+They are not part of the `programs.zsh` configuration and should be linked or installed separately if Bash is used as a login or interactive shell.
 
-Based on **LazyVim v8** distribution. Minimal customization — only `init.lua` (sets tabstop=4). Plugins, options, keymaps, and autocmds all use LazyVim defaults. LSPs/formatters (stylua, etc.) resolve from the nix profile on PATH. Formatter: stylua (2-space, 120 col).
+## Setup and Bootstrap
 
-## Pi (Coding Agent)
-
-Config at `pi/.pi/agent/` (mirrors `~/.pi/agent/`). home-manager links the static files — `settings.json`, `APPEND_SYSTEM.md`, `alibaba-config.json`, the `agents/*.md` subagent definitions, and `~/.pi/web-search.json` — via `mkOutOfStoreSymlink`, so edits in the repo apply without a rebuild.
-
-`~/.pi/agent` itself stays a real directory: pi writes runtime state there (`sessions/`, `memory/`, `npm/`, model caches), and `auth.json` (provider credentials) is gitignored and never committed — re-authenticate on each machine instead. To add a new subagent, drop the `.md` in `pi/.pi/agent/agents/` and add a matching `home.file` link in `home.nix`.
-
-## Herdr (Terminal Workspace Manager)
-
-Config at `herdr/.config/herdr/config.toml` (keybindings, theme, ui prefs). home-manager links just that file via `mkOutOfStoreSymlink`; `~/.config/herdr` stays a real directory for runtime state — `plugins/` (git clones), `plugins.json` (generated registry with machine paths), `session.json`, logs, and `release-notes.json` are all gitignored and regenerated by herdr.
-
-Plugins aren't tracked — they're installed from GitHub on each machine. Replicate the current set with:
-
-```bash
-herdr plugin install smarzban/herdr-file-viewer
-herdr plugin install persiyanov/herdr-reviewr
-```
-
-## Setup
-
-Fresh machine:
+On a fresh Linux machine with `curl` and `git` available, run:
 
 ```bash
 bash <(curl -sL https://raw.githubusercontent.com/duskoide/dotfiles/main/bootstrap.sh)
 ```
 
-Installs Nix, enables flakes, installs home-manager, clones this repo, and runs `home-manager switch`. See `HOME_MANAGER.md` for the full architecture and rollback instructions.
+`bootstrap.sh`:
+
+1. Loads an existing Nix profile when present.
+2. Installs single-user Nix if needed.
+3. Enables the `nix-command` and `flakes` features.
+4. Installs Home Manager if needed.
+5. Clones or fast-forwards `~/dotfiles`.
+6. Links `~/.config/home-manager` to `~/dotfiles/home-manager`.
+7. Runs `home-manager switch --flake ~/.config/home-manager#pn`.
+
+After bootstrap, open a new shell, recreate the ignored `shell/.zsh/secrets.zsh`, select a Rust toolchain with `rustup default stable`, and authenticate GitHub if Git credential helpers are needed.
+
+For a standalone Home Manager update:
+
+```bash
+home-manager switch --flake ~/.config/home-manager#pn
+```
+
+For the integrated NixOS configuration:
+
+```bash
+sudo nixos-rebuild switch --flake ~/dotfiles/home-manager#tower
+```
+
+Previous Home Manager generations can be rolled back with:
+
+```bash
+home-manager switch --flake ~/.config/home-manager --rollback
+```
