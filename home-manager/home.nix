@@ -118,7 +118,6 @@ in {
     # Manage the complete Niri configuration directory from the repository.
     niri.source = link "${dotfiles}/niri/.config/niri";
     rofi.source = link "${dotfiles}/rofi/.config/rofi";
-    # herdr's config.toml is managed by ~/pi-config (install.sh links it).
   };
 
   # Default web browser = Zen (flatpak). Covers every scheme/MIME type apps

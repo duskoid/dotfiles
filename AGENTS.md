@@ -22,7 +22,7 @@ These are the configuration directories currently present in the repository:
 
 Root-level files include `AGENTS.md`, `HOME_MANAGER.md`, `bootstrap.sh`, and `.gitignore`. The Neovim configuration also has its own `nvim/.gitignore`.
 
-Pi and Herdr configuration are not stored in this repository. They are managed externally (for example, from `~/pi-config`) and should not be added to the repository layout unless that management arrangement changes.
+Pi configuration is not stored in this repository. It is managed externally (for example, from `~/pi-config`) and should not be added to the repository layout unless that management arrangement changes.
 
 ## Flake Architecture
 

@@ -8,7 +8,7 @@ Desktop/configs live in `~/dotfiles` and are symlinked into place.
 
 Three files split responsibilities:
 
-- **`flake.nix`** — inputs (nixpkgs, home-manager, herdr) and flake outputs
+- **`flake.nix`** — inputs (nixpkgs, home-manager, superfile) and flake outputs
 - **`home.nix`** — global packages, session env/PATH, config symlinks, git/fzf/zoxide/direnv programs
 - **`shell.nix`** — zsh configuration: plugins, aliases, options, history, init hooks
 
@@ -19,7 +19,7 @@ The flake targets `x86_64-linux` with `stateVersion = "24.11"` and enables `targ
 ### Packages (global, always in PATH)
 Dev toolchains: nodejs, openjdk25, python311 (+pip), rustup, bun
 CLI tools: ripgrep, fd, fzf, jq, gum, eza, bat, delta, glow, stylua, shellcheck, shfmt, tty-clock, nodePackages.pnpm, turso-cli, sqld
-Terminal apps: btop, fastfetch, lazygit, helix, yazi, neovim, github-cli, zellij, rofi, herdr
+Terminal apps: btop, fastfetch, lazygit, fresh-editor, neovim, github-cli, zellij, rofi, superfile
 
 Rust toolchains (rustc/cargo/rustfmt/clippy) come from `rustup` rather than nixpkgs, so `~/.cargo/bin` is on PATH and toolchain switching works as usual. Run `rustup default stable` once on a fresh machine.
 
@@ -44,7 +44,6 @@ These point back into `~/dotfiles` via `mkOutOfStoreSymlink` — edit there, no 
 - `~/.config/helix`, `yazi`, `fastfetch`, `lazygit`, `kitty`, `opencode`, `niri`, `rofi`
 - `~/.zsh/.p10k.zsh`, `functions.zsh`, `secrets.zsh`
 - `~/.pi/web-search.json`, `~/.pi/agent/settings.json`, `APPEND_SYSTEM.md`, `alibaba-config.json`, `agents/*.md` (pi coding agent; `~/.pi/agent` stays a real dir for runtime state, `auth.json` gitignored)
-- `~/.config/herdr/config.toml` (herdr; `~/.config/herdr` stays a real dir for plugins/session/logs, all gitignored)
 
 `~/.zsh` itself is a real directory (HM puts plugins in `~/.zsh/plugins`), so files are linked individually.
 
