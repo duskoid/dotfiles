@@ -16,19 +16,12 @@ Key directories:
 - `home-manager/` — **Nix flake**: `flake.nix`, `home.nix` (packages, env, symlinks, programs), `shell.nix` (zsh). This is the source of truth for the dev environment.
 - `shell/` — Shell config symlinked by home-manager: `.zsh/functions.zsh`, `.zsh/.p10k.zsh`, `.zsh/secrets.zsh` (gitignored). `.bashrc`/`.bash_profile` are manual.
 - `niri/` — Primary compositor (KDL, split into modular `dms/` includes)
-- `hypr/` — Secondary compositor (Hyprland + Hyprlock)
 - `nvim/` — LazyVim-based Neovim (lazy.nvim, minimal customization)
-- `opencode/` — OpenCode config (Context7 MCP, superpowers plugin, custom commands)
 - `pi/` — pi coding agent (settings, subagent defs, system prompt; auth stays local)
 - `kitty/` — Terminal (Iosevka Nerd Font, Alabaster Dark theme)
 - `waybar/` — Status bar (split into `modules-main.jsonc`, `modules-custom.jsonc`, `modules-groups.jsonc`)
 - `rofi/` — App launcher (multiple themes in `themes/` and `menu/`)
-- `yazi/` — File manager
-- `helix/` — Helix editor
 - `herdr/` — herdr terminal workspace manager (keybindings/theme/ui in config.toml; plugins reinstalled via CLI)
-- `btop/` — System monitor
-- `fastfetch/` — System info display
-- `lazygit/` — Git TUI
 
 ## Package Management
 
