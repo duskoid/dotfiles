@@ -1,0 +1,7 @@
+// Noctalia Window Rules
+
+// @id=noctalia-floating-windows @name=Noctalia Floating Windows
+window-rule {
+    match app-id="^dev.noctalia.Noctalia$"
+    open-floating true
+}

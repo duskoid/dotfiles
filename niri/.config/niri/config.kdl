@@ -151,7 +151,7 @@ layout {
     }
 }
 layer-rule {
-    match namespace="^quickshell$"
+    match namespace="^noctalia-backdrop"
     place-within-backdrop true
 }
 overview {
@@ -159,7 +159,7 @@ overview {
         off
     }
 }
-spawn-at-startup "dms" "run"
+spawn-at-startup "noctalia"
 spawn-at-startup "fcitx5" "-d"
 // Optional: Clipboard history
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
@@ -280,10 +280,9 @@ window-rule {
     match app-id="zoom"
     open-floating true
 }
-// Open dms windows as floating by default
+// Open noctalia windows as floating by default
 window-rule {
-    match app-id=r#"org.quickshell$"#
-    match app-id=r#"com.danklinux.dms$"#
+    match app-id=r#"dev.noctalia.Noctalia$"#
     open-floating true
 }
 debug {
@@ -300,11 +299,11 @@ recent-windows {
     }
 }
 
-// Include dms files
-include "dms/colors.kdl"
-include "dms/layout.kdl"
-include "dms/alttab.kdl"
-include "dms/binds.kdl"
-include "dms/outputs.kdl"
-include "dms/cursor.kdl"
-include "dms/windowrules.kdl"
+// Include noctalia files
+include "noctalia/colors.kdl"
+include "noctalia/layout.kdl"
+include "noctalia/alttab.kdl"
+include "noctalia/binds.kdl"
+include "noctalia/outputs.kdl"
+include "noctalia/cursor.kdl"
+include "noctalia/windowrules.kdl"

@@ -25,6 +25,10 @@ in {
     rustup
     bun
     uv
+    # native build toolchain: node-gyp needs make + g++ to compile
+    # native npm modules (e.g. node-pty) on Linux
+    gnumake
+    gcc13
 
     # cli utilities
     ripgrep
@@ -51,8 +55,8 @@ in {
     fresh-editor
     neovim
     github-cli
-    zellij
     rofi
+    tectonic
     superfile.packages.${pkgs.system}.default
 
     # GUI apps
@@ -61,6 +65,7 @@ in {
     # Fonts
     iosevka-bin
     nerd-fonts.iosevka
+    noto-fonts-cjk-sans
     noto-fonts-cjk-serif
   ];
 
@@ -107,12 +112,7 @@ in {
 
   xdg.configFile = {
     nvim.source = link "${dotfiles}/nvim/.config/nvim";
-    helix.source = link "${dotfiles}/helix/.config/helix";
-    yazi.source = link "${dotfiles}/yazi/.config/yazi";
-    fastfetch.source = link "${dotfiles}/fastfetch/.config/fastfetch";
-    lazygit.source = link "${dotfiles}/lazygit/.config/lazygit";
     kitty.source = link "${dotfiles}/kitty/.config/kitty";
-    opencode.source = link "${dotfiles}/opencode/.config/opencode";
     "fresh/config.json".source = link "${dotfiles}/fresh/.config/fresh/config.json";
     "fresh/init.ts".source = link "${dotfiles}/fresh/.config/fresh/init.ts";
     # Manage the complete Niri configuration directory from the repository.
