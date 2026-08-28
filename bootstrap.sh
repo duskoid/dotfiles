@@ -141,32 +141,44 @@ home-manager switch --flake "$HOME/.config/home-manager#pn" --show-trace
 
 # --- 10. Set zsh as the login shell ------------------------------------------
 # Home Manager configures zsh (programs.zsh) but never runs chsh, so a fresh
-# machine keeps logging into bash. The Nix profile is loaded from the zsh
-# startup files via hm-session-vars, so making zsh the login shell is what
-# gets nix/home-manager onto PATH after relogin. Runs after the build because
-# zsh itself is installed into the Nix profile by the switch above.
-ZSH_BIN="$(command -v zsh || true)"
-if [[ -n "$ZSH_BIN" ]]; then
+# machine keeps logging into bash. The system zsh reads all the HM-managed zsh
+# files (which load Nix via hm-session-vars), so making zsh the login shell is
+# what gets nix/home-manager onto PATH after relogin.
+#
+# IMPORTANT: use a *system* zsh that is listed in /etc/shells, NOT the
+# Nix-profile zsh (~/.nix-profile/bin/zsh). Display managers such as SDDM
+# validate the login shell against /etc/shells and refuse shells living under
+# $HOME, which locks you out of the graphical session
+# ("Login for <user> is disabled").
+SYSTEM_ZSH=""
+for candidate in /usr/bin/zsh /bin/zsh; do
+  if [[ -x "$candidate" ]]; then
+    SYSTEM_ZSH="$candidate"
+    break
+  fi
+done
+
+if [[ -n "$SYSTEM_ZSH" ]]; then
   current_shell="$(getent passwd "$USER" | cut -d: -f7)"
-  if [[ "$current_shell" != "$ZSH_BIN" ]]; then
+  if [[ "$current_shell" != "$SYSTEM_ZSH" ]]; then
     # chsh requires the target shell to be listed in /etc/shells.
-    if ! grep -qxF "$ZSH_BIN" /etc/shells 2>/dev/null; then
-      echo "==> Adding $ZSH_BIN to /etc/shells (needs sudo)..."
-      echo "$ZSH_BIN" | sudo tee -a /etc/shells >/dev/null || true
+    if ! grep -qxF "$SYSTEM_ZSH" /etc/shells 2>/dev/null; then
+      echo "==> Adding $SYSTEM_ZSH to /etc/shells (needs sudo)..."
+      echo "$SYSTEM_ZSH" | sudo tee -a /etc/shells >/dev/null || true
     fi
-    echo "==> Setting login shell to $ZSH_BIN..."
-    if chsh -s "$ZSH_BIN"; then
+    echo "==> Setting login shell to $SYSTEM_ZSH..."
+    if chsh -s "$SYSTEM_ZSH"; then
       echo "==> Login shell set to zsh. Takes effect on next login."
     else
       echo "!! Could not change login shell automatically." >&2
-      echo "   Run manually:  chsh -s $ZSH_BIN" >&2
+      echo "   Run manually:  chsh -s $SYSTEM_ZSH" >&2
     fi
   else
-    echo "==> Login shell already zsh."
+    echo "==> Login shell already $SYSTEM_ZSH."
   fi
 else
-  echo "!! zsh not found on PATH; skipping chsh." >&2
-  echo "   Run manually:  chsh -s \"\$(command -v zsh)\"" >&2
+  echo "!! No system zsh found in /usr/bin or /bin; skipping chsh." >&2
+  echo "   Install zsh via your distro, then run:  chsh -s /usr/bin/zsh" >&2
 fi
 
 echo ""
