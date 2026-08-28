@@ -139,6 +139,36 @@ link_with_backup "$DOTFILES_DIR/shell/.bash_profile" "$HOME/.bash_profile"
 echo "==> Running home-manager switch..."
 home-manager switch --flake "$HOME/.config/home-manager#pn" --show-trace
 
+# --- 10. Set zsh as the login shell ------------------------------------------
+# Home Manager configures zsh (programs.zsh) but never runs chsh, so a fresh
+# machine keeps logging into bash. The Nix profile is loaded from the zsh
+# startup files via hm-session-vars, so making zsh the login shell is what
+# gets nix/home-manager onto PATH after relogin. Runs after the build because
+# zsh itself is installed into the Nix profile by the switch above.
+ZSH_BIN="$(command -v zsh || true)"
+if [[ -n "$ZSH_BIN" ]]; then
+  current_shell="$(getent passwd "$USER" | cut -d: -f7)"
+  if [[ "$current_shell" != "$ZSH_BIN" ]]; then
+    # chsh requires the target shell to be listed in /etc/shells.
+    if ! grep -qxF "$ZSH_BIN" /etc/shells 2>/dev/null; then
+      echo "==> Adding $ZSH_BIN to /etc/shells (needs sudo)..."
+      echo "$ZSH_BIN" | sudo tee -a /etc/shells >/dev/null || true
+    fi
+    echo "==> Setting login shell to $ZSH_BIN..."
+    if chsh -s "$ZSH_BIN"; then
+      echo "==> Login shell set to zsh. Takes effect on next login."
+    else
+      echo "!! Could not change login shell automatically." >&2
+      echo "   Run manually:  chsh -s $ZSH_BIN" >&2
+    fi
+  else
+    echo "==> Login shell already zsh."
+  fi
+else
+  echo "!! zsh not found on PATH; skipping chsh." >&2
+  echo "   Run manually:  chsh -s \"\$(command -v zsh)\"" >&2
+fi
+
 echo ""
 echo "========================================="
 echo " Done! Open a new shell to get started."
