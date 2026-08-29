@@ -4,6 +4,23 @@
   programs.zsh = {
     enable = true;
 
+    # Home Manager emits a plain `compinit` by default, which runs a full
+    # security audit of every fpath dir on *every* startup (~1.8s here).
+    # Override it to reuse the compiled dump and only re-audit once a day.
+    # NOTE: use an array assignment for the glob — `[[ -n glob ]]` does NOT
+    # perform filename generation, so the dated-glob idiom must expand here.
+    completionInit = ''
+      autoload -Uz compinit
+      setopt local_options extended_glob
+      typeset -a _zcompdump_stale=( ''${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) )
+      if (( ''${#_zcompdump_stale} )); then
+        compinit
+      else
+        compinit -C
+      fi
+      unset _zcompdump_stale
+    '';
+
     setOptions = [
       "autocd"
       "correct"
